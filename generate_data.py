@@ -18,7 +18,7 @@ class dataGenerator(object):
         self.keys = list(self.pgrid.keys())
 
         # generate time
-        npts = self.settings['ws']/self.settings['dt']
+        npts = int(self.settings['ws']/self.settings['dt'])
         hw = (0.5*npts*self.settings['dt'])/60./24.
         self.t = np.linspace( 1-hw,1+hw,npts )
 
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     settings = { 'ws':360, 'dt':2 }
     # window size (ws/dt = num pts) (MINUTES)
     # time step (observation cadence) (MINUTES)
-    npts = settings['ws']/settings['dt']
+    npts = int(settings['ws']/settings['dt'])
     hw = (0.5*npts*settings['dt'])/60./24. # half width in days
     t = np.linspace( 1-hw,1+hw,npts )
     dt = t.max()-t.min()
