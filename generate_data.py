@@ -49,10 +49,16 @@ class dataGenerator(object):
         pvals = list(product(*plist)) # compute cartesian product of N sets
 
         # evaluate all of the transits with multiprocessing
-        pool = mp.Pool()
-        self.results = np.array( pool.starmap(self.super_worker, pvals) )
-        pool.close()
-        pool.join()
+        
+        results = []
+        for pval in pvals:
+            result = self.super_worker(*pval)
+            results.append(result)
+        self.results = np.array(results)
+        #pool = mp.Pool()
+        #self.results = np.array( pool.starmap(self.super_worker, pvals) )
+        #pool.close()
+        #pool.join()
 
         del plist
         del pvals
