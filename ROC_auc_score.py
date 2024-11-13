@@ -34,18 +34,18 @@ if __name__ == "__main__":
         'Wavelet MLP':'green',
         'CNN 1D':'blue',
         'SVM': 'orange',
-        'BLS': 'cyan'
+        # 'BLS': 'cyan'
     }
 
     f,ax = plt.subplots(1)
 
     # BLS ROC SCORE
-    data = pickle.load(open('pickle_data/LS_predictions.pkl','rb'))
-    sig_tol = 1./ (np.array(data['rps']) / (np.array(data['stds'])/1e6 ))
-    y_predict = np.abs(np.array(data['mids'])/90.) * -0.25*np.sign(data['rps'])*sig_tol
-    fpr, tpr, threshold_list_ls = roc_curve(data['y_test'], y_predict)
-    roc_auc = auc(fpr, tpr)
-    ax.plot( fpr,tpr, label="{:.2f} - {}".format(roc_auc,'BLS'),color=colors['BLS'] )
+    # data = pickle.load(open('pickle_data/LS_predictions.pkl','rb'))
+    # sig_tol = 1./ (np.array(data['rps']) / (np.array(data['stds'])/1e6 ))
+    # y_predict = np.abs(np.array(data['mids'])/90.) * -0.25*np.sign(data['rps'])*sig_tol
+    # fpr, tpr, threshold_list_ls = roc_curve(data['y_test'], y_predict)
+    # roc_auc = auc(fpr, tpr)
+    # ax.plot( fpr,tpr, label="{:.2f} - {}".format(roc_auc,'BLS'),color=colors['BLS'] )
 
     # compute the ROC plot
     for k in models.keys():
