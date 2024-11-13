@@ -37,6 +37,7 @@ class dataGenerator(object):
         t = self.t - np.min(self.t)
         A = pars['A']+pars['A']*np.sin(2*np.pi*t/pars['PA'])
         w = pars['w']+pars['w']*np.sin(2*np.pi*t/pars['Pw'])
+        print('a')
         data = transit(self.t, pars) * ndata * (1+A*np.sin(2*np.pi*t/w + pars['phi']))
 
         # add systematic into noise "same distribution different points"
