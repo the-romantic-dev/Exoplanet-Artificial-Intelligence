@@ -49,6 +49,12 @@ class dataGenerator(object):
         pvals = list(product(*plist)) # compute cartesian product of N sets
 
         # evaluate all of the transits with multiprocessing
+        
+        # results = []
+        # for pval in pvals:
+        #     result = self.super_worker(*pval)
+        #     results.append(result)
+        # self.results = np.array(results, dtype=object)
         pool = mp.Pool()
         self.results = np.array( pool.starmap(self.super_worker, pvals), dtype=object)
         pool.close()
@@ -139,4 +145,12 @@ if __name__ == "__main__":
     os.makedirs('pickle_data', exist_ok=True)
     pickle.dump({'keys':data.keys,'results':data.results,'time':data.t}, open('pickle_data/transit_data_train.pkl','wb'))
 
-    print('number of samples:',len(data.results))
+    print('number of train samples:',len(data.results))
+
+    test_data = dataGenerator(**{'pgrid':pgrid_test,'settings':settings,'init':init})
+    test_data.generate()
+
+    os.makedirs('pickle_data', exist_ok=True)
+    pickle.dump({'keys':test_data.keys,'results':test_data.results,'time':test_data.t}, open('pickle_data/transit_data_test.pkl','wb'))
+
+    print('number of test samples:',len(test_data.results))

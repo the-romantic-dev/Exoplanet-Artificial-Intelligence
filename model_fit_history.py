@@ -14,9 +14,9 @@ from keras import backend as K
 from keras.optimizers import SGD
 from keras.models import load_model
 from keras.layers.pooling import AveragePooling1D
-from keras.layers.advanced_activations import PReLU as PRELU
+from keras.layers import PReLU as PRELU
 from keras.callbacks import History
-from keras.layers.normalization import BatchNormalization
+from keras.layers import BatchNormalization
 import matplotlib.pyplot as plt
 
 # db2
@@ -51,7 +51,7 @@ def load_data(fname='transit_data.pkl',categorical=False,whiten=True,DIR='pickle
 
 
 def pn_rates(model,X,y):
-    y_pred = model.predict_classes(X)
+    y_pred = model.predict(X)
 
     pos_idx = y==1
     neg_idx = y==0
@@ -139,7 +139,7 @@ def make_cnn(maxlen):
                             #strides=1, # same as subsample_length?
                             name='conv2',
                             padding="valid"))
-    model.add(AveragePooling1D(pool_length=pool_length))
+    model.add(AveragePooling1D(pool_size=pool_length))
 
     # conv2
     #model.add(Convolution1D(nb_filter=4,
@@ -259,8 +259,8 @@ if __name__ == "__main__":
         print('Test FP:',fp)
         print('Test FN:',fn)
 
-        ax[0].plot(1+np.arange(len( history.history['loss'])), np.log2( history.history['loss'] ),'k-',label='{}'.format(k),color=colors[k])
-        ax[1].plot(1+np.arange(len( history.history['loss'])),np.log2(1-np.array(history.history['acc'])),'r-',label='{}'.format(k),color=colors[k])
+        ax[0].plot(1+np.arange(len( history.history['loss'])), np.log2( history.history['loss'] ),'-',label='{}'.format(k),color=colors[k])
+        ax[1].plot(1+np.arange(len( history.history['loss'])),np.log2(1-np.array(history.history['accuracy'])),'-',label='{}'.format(k),color=colors[k])
 
         models[k].save('models/{}_transit.h5'.format(k))
 
