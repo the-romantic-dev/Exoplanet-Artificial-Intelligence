@@ -4,7 +4,7 @@ from ELCA import transit
 import multiprocessing as mp
 from itertools import product
 from sklearn import preprocessing
-
+import os
 np.random.seed(1337)
 
 class dataGenerator(object):
@@ -49,16 +49,10 @@ class dataGenerator(object):
         pvals = list(product(*plist)) # compute cartesian product of N sets
 
         # evaluate all of the transits with multiprocessing
-        
-        results = []
-        for pval in pvals:
-            result = self.super_worker(*pval)
-            results.append(result)
-        self.results = np.array(results)
-        #pool = mp.Pool()
-        #self.results = np.array( pool.starmap(self.super_worker, pvals) )
-        #pool.close()
-        #pool.join()
+        pool = mp.Pool()
+        self.results = np.array( pool.starmap(self.super_worker, pvals), dtype=object)
+        pool.close()
+        pool.join()
 
         del plist
         del pvals
@@ -142,6 +136,7 @@ if __name__ == "__main__":
     data = dataGenerator(**{'pgrid':pgrid,'settings':settings,'init':init})
     data.generate()
 
+    os.makedirs('pickle_data', exist_ok=True)
     pickle.dump({'keys':data.keys,'results':data.results,'time':data.t}, open('pickle_data/transit_data_train.pkl','wb'))
 
     print('number of samples:',len(data.results))
