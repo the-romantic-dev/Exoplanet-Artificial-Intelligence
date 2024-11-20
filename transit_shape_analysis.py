@@ -28,7 +28,7 @@ if __name__ == "__main__":
 
         for v in changes[key]:
             init[key] = v
-            ax[i,j].plot(t, transit(time=t, values=init),label="{} = {}".format(label[key], v))
+            ax[i,j].plot(t, transit(t, init),label="{} = {}".format(label[key], v))
 
         ax[i,j].legend(loc='best')
         ax[i,j].set_xlabel('Time (Days)')

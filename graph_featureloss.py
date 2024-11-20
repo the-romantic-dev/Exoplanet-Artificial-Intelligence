@@ -32,8 +32,9 @@ if __name__ == "__main__":
         'SVM': 'orange'
     }
 
-
+    print(X_test.shape[1])
     npts = np.arange(0,X_test.shape[1]*0.55,5).astype(int)
+    print(npts)
     idxs = np.arange(X_test.shape[1])
 
     sig_idx = np.array(keys) == 'sig_tol'
@@ -56,7 +57,10 @@ if __name__ == "__main__":
 
         # random chunks to zero out
         for i in range(X_r.shape[0]):
-            nchunks = np.random.randint(0,n/10+0.01) + 1
+            if n >= 10:
+                nchunks = np.random.randint(0,n/10+0.01) + 1
+            else:
+                nchunks = 1
             chunksize = int(n/nchunks)
             ridxs = np.random.randint(0,X_r.shape[1],nchunks) #idxs:idxs+chunksize = 0
 
