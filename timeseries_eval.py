@@ -136,7 +136,7 @@ if __name__ == "__main__":
              'a0':1, 'a1':0,            # Airmass extinction terms
              'a2':0, 'tm':1 }           # tm = Mid Transit time (Days)
 
-    model = transit(time=t,values=init)
+    model = transit(t,init)
     data = model * np.random.normal(1,1000e-6,NPTS) + 500e-6*np.sin(2*np.pi*np.arange(NPTS)/(0.5*NPTS) )
 
 
